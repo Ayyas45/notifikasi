@@ -17,7 +17,7 @@ function sendNotification($headings, $contents, $filters = null, $player_id = nu
     curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json; charset=utf-8',
-        'Authorization: Basic os_v2_app_nqcamj4bifhwpivhrltjbnrg23vfy6gtisfe5tvmszku5uygut7tesr6hn423byxw2tl43h335juph456rmxjlift3okiki6k7ewmfy'
+        'Authorization: Key os_v2_app_nqcamj4bifhwpivhrltjbnrg23vfy6gtisfe5tvmszku5uygut7tesr6hn423byxw2tl43h335juph456rmxjlift3okiki6k7ewmfy'
     ));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_POST, TRUE);
