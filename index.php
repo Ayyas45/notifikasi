@@ -3,7 +3,7 @@
 // ===============================
 // Konfigurasi OneSignal
 // ===============================
-define("APP_ID", "6c040627-8141-4f67-a2a7-8ae690b626d6");
+define("APP_ID", "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf");
 
 define("REST_API_KEY", "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx6gnc4cutslevnnqnpr3hh7flji2mox5t3enr5hleze3ofopsjizsvvgavepldd737womgedx36qg4q");
 
