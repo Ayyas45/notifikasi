@@ -2,7 +2,7 @@
 // === FUNGSI UTAMA ===
 function sendNotification($headings, $contents, $filters = null, $player_id = null) {
     // API Key dan App ID dari input Anda
-    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx6gnc4cutslevnnqnpr3hh7flji2mox5t3enr5hleze3ofopsjizsvvgavepldd737womgedx36qg4q";
+    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx52z5qghp6gelg5hw5f3iwvzubgdlsc4nmgp4gzcz6ucorczri2z4upwkxao2r2uastu7tu6c7c2xfi";
     $appId = "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf";
     
     $fields = array(
