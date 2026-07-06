@@ -5,7 +5,7 @@ $status = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $appId = "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf";
-    $apiKey = "YOUR_API_KEY";
+    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx52z5qghp6gelg5hw5f3iwvzubgdlsc4nmgp4gzcz6ucorczri2z4upwkxao2r2uastu7tu6c7c2xfi";
 
     $title = $_POST['judul'];
     $message = $_POST['pesan'];
