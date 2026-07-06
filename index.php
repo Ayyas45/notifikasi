@@ -5,7 +5,7 @@ $status = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $appId = "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf";
-    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx52z5qghp6gelg5hw5f3iwvzubgdlsc4nmgp4gzcz6ucorczri2z4upwkxao2r2uastu7tu6c7c2xfi";
+    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx6m6a2rlfzyulonn3k7v4mcnjxdhzpuj5zx7jn2ezxrfhdukkwiej7hf52y6cy5giaethtyqrfxujki";
 
     $title = $_POST['judul'];
     $message = $_POST['pesan'];
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Content-Type: application/json",
-        "Authorization: Bearer os_v2_app_i4gf6u7lunfmrhozyujdx6ywx52z5qghp6gelg5hw5f3iwvzubgdlsc4nmgp4gzcz6ucorczri2z4upwkxao2r2uastu7tu6c7c2xfi".$apiKey
+        "Authorization: Bearer ".$apiKey
     ]);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
