@@ -18,7 +18,7 @@ function sendNotification($headings, $contents, $filters = null, $player_id = nu
     }
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+    curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v2/notifications");
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json; charset=utf-8',
         'Authorization: Bearer ' . $apiKey // Menggunakan skema Bearer
