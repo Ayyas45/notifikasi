@@ -1,50 +1,88 @@
 <?php
-// === FUNGSI UTAMA ===
-function sendNotification($headings, $contents, $filters = null, $player_id = null) {
-    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx52z5qghp6gelg5hw5f3iwvzubgdlsc4nmgp4gzcz6ucorczri2z4upwkxao2r2uastu7tu6c7c2xfi";
-    $fields = array(
-        'app_id' => "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf",
-        'contents' => array("en" => $contents),
-        'headings' => array("en" => $headings)
-    );
 
-    if ($player_id) {
-        $fields['include_player_ids'] = array($player_id);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+function sendNotification($title, $message, $playerId = null)
+{
+    $appId = "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf";
+    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx52z5qghp6gelg5hw5f3iwvzubgdlsc4nmgp4gzcz6ucorczri2z4upwkxao2r2uastu7tu6c7c2xfi";
+
+    $fields = [
+        "app_id" => $appId,
+        "headings" => [
+            "en" => $title
+        ],
+        "contents" => [
+            "en" => $message
+        ]
+    ];
+
+    if (!empty($playerId)) {
+        $fields["include_player_ids"] = [$playerId];
     } else {
-        $fields['filters'] = $filters;
+        $fields["filters"] = [
+            [
+                "field" => "last_session",
+                "relation" => ">",
+                "value" => "0"
+            ]
+        ];
     }
 
     $ch = curl_init();
+
     curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        'Content-Type: application/json; charset=utf-8',
-        'Authorization: Bearer ' . $apiKey 
-    ));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Content-Type: application/json; charset=utf-8",
+        "Authorization: Bearer " . $apiKey
+    ]);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-    
+
     $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+    if (curl_errno($ch)) {
+        $response = "cURL Error: " . curl_error($ch);
+    }
+
     curl_close($ch);
-    return $response;
+
+    return [
+        "http_code" => $httpCode,
+        "response" => $response
+    ];
 }
 
-// === LOGIKA UTAMA ===
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['player_id'])) {
-        // Jika ada player_id, kirim spesifik
-        echo "Respon Spesifik: " . sendNotification("Halo!", "Notif dari aplikasi kamu!", null, $_POST['player_id']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    if (!empty($_POST['player_id'])) {
+
+        $result = sendNotification(
+            "Halo!",
+            "Notif khusus untuk kamu",
+            $_POST['player_id']
+        );
+
     } else {
-        // Jika POST tapi tidak ada player_id
-        echo "Error: player_id tidak ditemukan.";
+
+        $result = sendNotification(
+            "Pengumuman",
+            "Besok libur hari raya idul fitri"
+        );
+
     }
+
+    echo "<pre>";
+    echo "HTTP CODE : " . $result['http_code'] . PHP_EOL;
+    echo "RESPONSE :" . PHP_EOL;
+    echo $result['response'];
+    echo "</pre>";
+
 } else {
-    // Jika diakses via browser (GET)
-    $judul = "Pengumuman";
-    $isi = "Besok libur hari raya idul fitri";
-    $filter_aktif = array(array("field" => "last_session", "relation" => ">", "value" => "0"));
-    
-    echo "Respon Server OneSignal: " . sendNotification($judul, $isi, $filter_aktif);
+
+    echo "Server OneSignal siap.";
+
 }
-?>
