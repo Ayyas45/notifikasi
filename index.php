@@ -5,7 +5,7 @@
 // ===============================
 define("APP_ID", "6c040627-8141-4f67-a2a7-8ae690b626d6");
 
-define("REST_API_KEY", "os_v2_app_nqcamj4bifhwpivhrltjbnrg2zb65m42d3aezleerzhjotvrpz6n4g5whohwvcmlfwi2ck56trr3wsjvcciuq4kdwaayhhocht5sypq");
+define("REST_API_KEY", "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx6gnc4cutslevnnqnpr3hh7flji2mox5t3enr5hleze3ofopsjizsvvgavepldd737womgedx36qg4q");
 
 
 // ===============================
