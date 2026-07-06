@@ -1,8 +1,12 @@
 <?php
-// === FUNGSI UTAMA (RESEP) ===
+// === FUNGSI UTAMA ===
 function sendNotification($headings, $contents, $filters = null, $player_id = null) {
+    // API Key dan App ID dari input Anda
+    $apiKey = "os_v2_app_i4gf6u7lunfmrhozyujdx6ywx6gnc4cutslevnnqnpr3hh7flji2mox5t3enr5hleze3ofopsjizsvvgavepldd737womgedx36qg4q";
+    $appId = "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf";
+    
     $fields = array(
-        'app_id' => "470c5f53-eba3-4ac8-9dd9-c5123bfb16bf",
+        'app_id' => $appId,
         'contents' => array("en" => $contents),
         'headings' => array("en" => $headings)
     );
@@ -17,7 +21,7 @@ function sendNotification($headings, $contents, $filters = null, $player_id = nu
     curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json; charset=utf-8',
-        'Authorization: Basic os_v2_app_i4gf6u7lunfmrhozyujdx6ywx6gnc4cutslevnnqnpr3hh7flji2mox5t3enr5hleze3ofopsjizsvvgavepldd737womgedx36qg4q'
+        'Authorization: Bearer ' . $apiKey // Menggunakan skema Bearer
     ));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_POST, TRUE);
@@ -25,24 +29,21 @@ function sendNotification($headings, $contents, $filters = null, $player_id = nu
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
     
     $response = curl_exec($ch);
+    $error = curl_error($ch);
     curl_close($ch);
-    return $response;
+
+    return $error ? "cURL Error: " . $error : $response;
 }
 
-// === LOGIKA PEMICU (PROGRAM PENGIRIM) ===
-
-// 1. Jika Aplikasi mengirim data POST
+// === LOGIKA PEMICU ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['player_id'])) {
     echo "Respon Spesifik: " . sendNotification("Halo!", "Notif dari aplikasi kamu!", null, $_POST['player_id']);
-} 
-// 2. Jika diakses via Browser (Kirim Massal/Broadcast untuk Dosen)
-else {
+} else {
     $judul = "Pengumuman";
     $isi = "Besok libur hari raya idul fitri";
-    
+    // Filter untuk memastikan notifikasi terkirim ke perangkat yang aktif
     $filter_aktif = array(array("field" => "last_session", "relation" => ">", "value" => "0"));
     
-    $hasil = sendNotification($judul, $isi, $filter_aktif);
-    echo "Respon Server OneSignal: " . $hasil;
+    echo "Respon Server OneSignal: " . sendNotification($judul, $isi, $filter_aktif);
 }
 ?>
