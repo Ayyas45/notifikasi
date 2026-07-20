@@ -22,7 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         "contents" => [
             "en" => $message
         ],
-        "included_segments" => ["All Users"]
+        // Menggunakan 'Subscribed Users' agar menembak langsung ke perangkat yang statusnya Subscribed
+        "included_segments" => ["Subscribed Users"]
     ];
 
     $ch = curl_init();
@@ -32,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
         "Content-Type: application/json; charset=utf-8",
-        "Authorization: Key " . $apiKey // Menggunakan 'Key ' untuk v2 API Key
+        "Authorization: Key " . $apiKey
     ]);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
 
